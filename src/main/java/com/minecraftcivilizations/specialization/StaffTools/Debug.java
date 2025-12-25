@@ -25,8 +25,10 @@ import java.util.*;
 
 /**
  * Utilies that aim to help with server development and debugging
- * Please use it when trying to debug things.
+ * Any debug channel can be created on the fly
+ * These channels can be listened to with /debug on channel_name
  * see: DebugListenCommand.java for commands
+ * @author alectriciti
  */
 public class Debug implements Listener {
 
@@ -127,8 +129,8 @@ public class Debug implements Listener {
     }
 
     /**
-     * Establishes known/global default values.
-     * If adding a new channel, specify it here.
+     * This automatically registers channels in tab completion for systems which use Debug frequently.
+     * If adding a new permanent channel, specify it here.
      */
     private void setupDefaultChannels() {
         getOrCreateChannelPlayerSet("xp", true);
