@@ -55,6 +55,7 @@ import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Difficulty;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
