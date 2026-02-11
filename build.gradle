@@ -44,10 +44,6 @@ repositories {
     }
 }
 
-configurations {
-    shadow
-}
-
 dependencies {
     paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
     implementation("com.minecraftcivilizations:minecraftcivilizationscore:0.5.1")
@@ -73,7 +69,7 @@ shadowJar {
     archiveClassifier = ''
     archiveBaseName = project.name
 
-    configurations = [project.configurations.shadow]
+    configurations = [project.configurations.runtimeClasspath]
 
     relocate 'co.aikar.commands', 'com.minecraftcivilizations.specialization.acf'
     relocate 'co.aikar.locales', 'com.minecraftcivilizations.specialization.locales'
