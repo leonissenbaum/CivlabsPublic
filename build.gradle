@@ -44,13 +44,9 @@ repositories {
     }
 }
 
-configurations {
-    shadow
-}
-
 dependencies {
     paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
-    implementation("com.minecraftcivilizations:minecraftcivilizationscore:0.5.1")
+    compileOnly("com.minecraftcivilizations:minecraftcivilizationscore:0.5.1")
     implementation "com.google.code.gson:gson:2.13.1"
     implementation "co.aikar:acf-paper:0.5.1-SNAPSHOT"
     implementation("net.kyori:adventure-text-minimessage:4.25.0")
@@ -73,10 +69,15 @@ shadowJar {
     archiveClassifier = ''
     archiveBaseName = project.name
 
-    configurations = [project.configurations.shadow]
+    configurations = [project.configurations.runtimeClasspath]
 
     relocate 'co.aikar.commands', 'com.minecraftcivilizations.specialization.acf'
     relocate 'co.aikar.locales', 'com.minecraftcivilizations.specialization.locales'
+
+    dependencies {
+        exclude(dependency("com.minecraftcivilizations:minecraftcivilizationscore:.*"))
+    }
+
 }
 
 tasks {
