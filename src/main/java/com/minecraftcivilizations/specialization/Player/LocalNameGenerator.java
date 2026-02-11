@@ -765,67 +765,9 @@ public class LocalNameGenerator implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
-
-        // Check PDC for permanent name
-        boolean hasPermanentName = player.getPersistentDataContainer().has(PERMANENT_NAME_KEY, PersistentDataType.BYTE);
-        if (hasPermanentName) return; // Already chosen → skip everything
-
-        // Block if player has already played >10min
-        if (!canSelectTempName(player)) {
-            return;
-        }
-
-        Component mainTitle = MiniMessage.miniMessage().deserialize("Your name is: <gold>" + player.getName() + "</gold>");
-        Component subTitle = MiniMessage.miniMessage().deserialize("<gray>You have <red>" + getRemainingTime(player) + " </red>minutes to reroll name.</gray>");
-
-        Title t = Title.title(mainTitle, subTitle, 20, 150, 50);
-
-        player.showTitle(t);
-        // Retrieve temp data
-        TempNameData data = tempNames.get(uuid);
-
-        List<String> names;
-        if (data == null) {
-            // First time or no temp data → assign new temp names
-            names = assignTempNames(uuid, player.getName());
-        } else {
-            // Reuse previous temp names
-            names = new ArrayList<>();
-            names.add(data.initialName);
-            names.addAll(data.options);
-        }
-        PlayerUtil.message(player, MiniMessage.miniMessage().deserialize("<gradient:#0D1B2A:#1B263B>=====================================</gradient>"));
-
-        // Display current name
-        player.sendMessage(
-                Component.text("Your current name is: ", NamedTextColor.GRAY)
-                        .append(Component.text(names.getFirst(), NamedTextColor.GOLD)
-                                .decoration(TextDecoration.ITALIC, false))
-        );
-
-        // Build clickable name options (suggest command)
-        Component message = Component.text("Rerolled Names: ", NamedTextColor.GRAY);
-
-        for (int i = 1; i < names.size(); i++) {
-            String temp = names.get(i);
-
-            // Name selection button (suggest command)
-            Component nameComponent = MiniMessage.miniMessage().deserialize("<gray>[<#687AB9>" + temp + "</#687AB9>]</gray>")
-                    .hoverEvent(HoverEvent.showText(Component.text("Click to select " + temp)))
-                    .clickEvent(ClickEvent.runCommand("/setnameoption " + temp));
-
-            message = message.append(nameComponent);
-
-            if (i < names.size() - 1) {
-                message = message.append(Component.text(" || ", NamedTextColor.GRAY));
-            }
-        }
-        player.sendMessage( message);
-        player.sendMessage( MiniMessage.miniMessage().deserialize("<gray>You have <red>" + getRemainingTime(player) + "</red> minute(s) to select a rerolled name.</gray>"));
-        PlayerUtil.message(player, MiniMessage.miniMessage().deserialize("<gradient:#3E4C7F:#2A3253>=====================================</gradient>"));
+        // Name obfuscation is disabled: keep normal Minecraft names.
     }
+
 
 
     //this handles cleanup when a name is confirmed using namechoicecommand

@@ -222,16 +222,20 @@ public final class Specialization extends JavaPlugin {
                 CustomPlayer load = (CustomPlayer) MinecraftCivilizationsCore.getInstance().getCustomPlayerManager().load(playerJoinEvent.getUniqueId());
                 Component localName;
                 String real_name = playerJoinEvent.getName();
+                Component realNameComponent = Component.text(real_name)
+                        .color(NamedTextColor.WHITE)
+                        .decoration(TextDecoration.ITALIC, false);
                 if (load != null) {
                     MinecraftCivilizationsCore.getInstance().getCustomPlayerManager().addCustomPlayer(load);
-                    localName = load.getName();
+                    load.setName(realNameComponent);
+                    localName = realNameComponent;
                 } else {
                     MinecraftCivilizationsCore.getInstance().getCustomPlayerManager().addCustomPlayer(new CustomPlayer(playerJoinEvent.getUniqueId()));
                     CustomPlayer customPlayer = (CustomPlayer) MinecraftCivilizationsCore.getInstance().getCustomPlayerManager().getCustomPlayer(playerJoinEvent.getUniqueId());
-                    customPlayer.setName(Component.text(localNameGenerator.nextName()).color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false));
+                    customPlayer.setName(realNameComponent);
                     double height = Skill.mapValue(Math.random(), 0.0, 1.0, .85, 1.0);
                     customPlayer.setHeight(height);
-                    localName = customPlayer.getName();
+                    localName = realNameComponent;
                 }
 
 
@@ -356,8 +360,8 @@ public final class Specialization extends JavaPlugin {
         commandManager.registerCommand(new RecipesCommand());
         commandManager.registerCommand(new PurgeGoldenApplesCommand());
         commandManager.registerCommand(new RandomNameBulkTestCommand());
-        commandManager.registerCommand(new RerollNameCommand(localNameGenerator));
-        commandManager.registerCommand(new NameChoiceCommand(localNameGenerator));
+//        commandManager.registerCommand(new RerollNameCommand(localNameGenerator));
+//        commandManager.registerCommand(new NameChoiceCommand(localNameGenerator));
 //        commandManager.registerCommand(new XPLeaderboardCommand()); // (Loads player configs and causes XP Loss) TODO DO NOT ENABLE UNTIL FIXED
         commandManager.registerCommand(new CustomItemCommand(customItemManager));
         commandManager.registerCommand(new SudoChatCommand(localChat));
